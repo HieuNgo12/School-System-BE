@@ -1,19 +1,16 @@
 import express from "express";
 import Serverless from "serverless-http";
-
+import connectToMongo from "./connection.mjs";
+import teacherRouter from "./routers/teacherRouter.mjs"
+import teacherPositionRouter from "./routers/teacherPositionRouter.mjs"
+import bodyParser from "body-parser";
+import cors from "cors"
 const app = express();
-
-app.get("/", (req, res) => {
-  res.send("Hello World from Express serverless!");
-});
-
-app.get("/users", (req, res) => {
-  res.json([
-    { id: 1, name: "Alice" },
-    { id: 2, name: "Bob" },
-  ]);
-});
-
+app.use(cors());
+connectToMongo();
+// app.use(bodyParser)
+app.use("/teachers", teacherRouter);
+app.use("/teachers-positions", teacherPositionRouter);
 // You don't need to listen to the port when using serverless functions in production
 app.listen(8080, () => {
   console.log(
