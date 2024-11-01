@@ -9,7 +9,7 @@ const teacherController = {
         const page = req.query.page;
         const query = req.query.query;
       const teacher = await TeacherModal.find({}).populate("userId").populate("teacherPositionsId") .limit(limit)
-      .skip(limit * (page - 1))
+      .skip(limit * (page))
       .sort({
         name: "asc",
       });
