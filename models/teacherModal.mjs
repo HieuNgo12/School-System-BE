@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
+
 const teacherModal = new mongoose.Schema(
   {
     userId: {
@@ -7,18 +9,24 @@ const teacherModal = new mongoose.Schema(
     },
     isActive: {
       type: Boolean,
+      default: true,
     },
     isDeleted: {
       type: Boolean,
+      default: false,
     },
     code: {
       type: String,
+      isUnique: true,
+      default: () => uuidv4(),
     },
     startDate: {
       type: Date,
+      default: () => Date.now(),
     },
     endDate: {
       type: Date,
+      default: null,
     },
     teacherPositionsId: [
       { type: mongoose.Schema.Types.ObjectId, ref: "teacherPosition" },

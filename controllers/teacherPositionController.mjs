@@ -23,7 +23,7 @@ const teacherPositionController = {
   },
   postTeacherPosition: async (req, res, next) => {
     try {
-      const teacher = await TeacherPositionModal.create({});
+      const teacher = await TeacherPositionModal.create(req.body);
       res.status(200).send(teacher);
     } catch (e) {
       console.log(e);

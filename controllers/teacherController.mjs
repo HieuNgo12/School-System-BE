@@ -26,8 +26,9 @@ const teacherController = {
     }
   },
   postTeacher: async (req, res, next) => {
-    const teacherInfo = req.body;
     try {
+        console.log(req.body);
+
       const userBody = {
         name: req.body.name,
         email: req.body.email,
@@ -35,18 +36,19 @@ const teacherController = {
         address: req.body.address,
         identity: req.body.identity,
         dob: req.body.dob,
-        isDeleted: req.body.isDeleted,
-        role: req.body.role,
+        role: "TEACHER",
       };
+      const user = await UserModal.create(userBody);
+
       const teacherBody = {
-        name: req.body.name,
-        code: req.body.code,
-        des: req.body.des,
+        userId: user._id,
+        
+        
         isActive: true,
         isDeleted: false,
       };
-      const user = await UserModal.create(userBody);
       const teacher = await TeacherModal.create(teacherBody);
+
       res.status(200).send({
         message: "Teacher Created Successfully",
         data: teacher,
@@ -54,8 +56,8 @@ const teacherController = {
       });
     } catch (e) {
       console.log(e);
-      res.status(404).send({
-        message: e,
+      res.status(400).send({
+        message: e.message,
         status: "Fail",
       });
     }

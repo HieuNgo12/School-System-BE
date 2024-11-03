@@ -8,6 +8,10 @@ import cors from "cors"
 const app = express();
 app.use(cors());
 connectToMongo();
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 // app.use(bodyParser)
 app.use("/teachers", teacherRouter);
 app.use("/teachers-positions", teacherPositionRouter);
