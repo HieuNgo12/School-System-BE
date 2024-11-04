@@ -1,6 +1,7 @@
 import TeacherModal from "../models/teacherModal.mjs";
 import UserModal from "../models/userModal.mjs";
 import teachersData from "../mockData/school.teachers.json" with { type: "json" };
+import TeacherPositionModal from "../models/teacherPositionModal.mjs";
 
 const teacherController = {
   getTeachers: async (req, res, next) => {
@@ -27,7 +28,6 @@ const teacherController = {
   },
   postTeacher: async (req, res, next) => {
     try {
-        console.log(req.body);
 
       const userBody = {
         name: req.body.name,
@@ -39,13 +39,21 @@ const teacherController = {
         role: "TEACHER",
       };
       const user = await UserModal.create(userBody);
-
+      const teacherPositionsIds = req.body.teacherPositionsId
+      const teacherPositionsIdList = [];
+      console.log(teacherPositionsIds);
+      for(let i = 0 ; i < teacherPositionsIds.length;i++){
+        const teacherPosition = await TeacherPositionModal.findOne({name: teacherPositionsIds[i].label});
+        console.log(teacherPosition);
+        teacherPositionsIdList.push(teacherPosition._id);
+      };
+      const degrees = req.body.degrees
       const teacherBody = {
         userId: user._id,
-        
-        
+        teacherPositionsId: teacherPositionsIdList,
         isActive: true,
         isDeleted: false,
+        degrees: degrees
       };
       const teacher = await TeacherModal.create(teacherBody);
 
