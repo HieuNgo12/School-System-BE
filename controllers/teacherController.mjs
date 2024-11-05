@@ -28,7 +28,7 @@ const teacherController = {
   },
   postTeacher: async (req, res, next) => {
     try {
-
+      console.log(req.body);
       const userBody = {
         name: req.body.name,
         email: req.body.email,

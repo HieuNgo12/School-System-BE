@@ -17,7 +17,7 @@ const teacherModal = new mongoose.Schema(
     },
     code: {
       type: String,
-      isUnique: true,
+      unique: true, index: true,
       default: () => uuidv4(),
     },
     startDate: {

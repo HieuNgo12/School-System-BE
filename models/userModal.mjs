@@ -7,6 +7,7 @@ const userModal = new mongoose.Schema(
     },
     email: {
       type: String,
+      unique: true, index: true,
     },
     phoneNumber: {
       type: String,

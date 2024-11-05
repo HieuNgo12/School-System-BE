@@ -7,7 +7,7 @@ const teacherPositionModal = new mongoose.Schema(
     },
     code: {
       type: String,
-      isUnique: true,
+      unique: true, index: true,
     },
     des: {
       type: String,
